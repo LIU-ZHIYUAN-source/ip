@@ -1,5 +1,5 @@
-public class Task {
-    private final String description;
+public abstract class Task {
+    protected String description;
     private boolean isDone;
 
     public Task(String description){
@@ -23,7 +23,6 @@ public class Task {
         return this.isDone ? "[X]" : "[ ]";
     }
 
-    public String toDisplayString() {
-        return this.getStatus() + " " + this.description;
-    }
+    public abstract String getType();
+    public abstract String toDisplayString();
 }

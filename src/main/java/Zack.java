@@ -36,8 +36,7 @@ public class Zack {
 
             if (input.equals("list")) {
                 for (int i = 0; i < count; i++) {
-                    System.out.println("    " + (i + 1) + ". " + tasks[i].getStatus() +
-                            " " + tasks[i].getDescription());
+                    System.out.println("    " + (i + 1) + ". " + tasks[i].toDisplayString());
                 }
                 System.out.println("  " + line);
                 continue;
@@ -63,8 +62,54 @@ public class Zack {
                 continue;
             }
 
-            tasks[count] = new Task(input);
-            count++;
+            if (input.startsWith("todo ")) {
+                String desc = input.substring(5);
+                tasks[count] = new Todo(desc);
+                count++;
+
+                System.out.println("  " + line);
+                System.out.println("    Got it. I've added this task:");
+                System.out.println("    " + tasks[count - 1].toDisplayString());
+                System.out.println("    Now you have " + count + " tasks in the list.");
+                System.out.println("  " + line);
+                continue;
+            }
+
+            if (input.startsWith("deadline ")) {
+                String rest = input.substring(9);
+                String[] parts = rest.split("/by", 2);
+                String desc = parts[0];
+                String by = parts[1];
+                tasks[count] = new Deadline(desc, by);
+                count++;
+
+                System.out.println(" " + line);
+                System.out.println(" Got it. I've added this task:");
+                System.out.println(" " + tasks[count - 1].toDisplayString());
+                System.out.println(" Now you have " + count + " tasks in the list.");
+                System.out.println(" " + line);
+                continue;
+            }
+
+            if (input.startsWith("event ")) {
+                String rest = input.substring(6);
+                String[] firstSplit = rest.split("/from", 2);
+                String desc = firstSplit[0];
+
+                String[] secondSplit = firstSplit[1].split("/to", 2);
+                String from = secondSplit[0];
+                String to = secondSplit[1];
+
+                tasks[count] = new Event(desc, from, to);
+                count++;
+
+                System.out.println("  " + line);
+                System.out.println("    Got it. I've added this task:");
+                System.out.println("    " + tasks[count - 1].toDisplayString());
+                System.out.println("    Now you have " + count + " tasks in the list.");
+                System.out.println("  " + line);
+                continue;
+            }
 
             System.out.println("    added: " + input);
             System.out.println("  " + line);
