@@ -4,13 +4,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 
 public class Zack {
     private static final Path DATA_DIR = Paths.get("data");
     private static final Path DATA_FILE = DATA_DIR.resolve("zack.txt");
+    private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
+
+
 
     public static void main(String[] args) {
 
@@ -96,7 +104,10 @@ public class Zack {
                     String rest = input.substring(9);
                     String[] parts = rest.split("/by", 2);
                     String desc = parts[0];
-                    String by = parts[1];
+                    String bystr = parts[1];
+
+                    LocalDate by;
+                    by = LocalDate.parse(bystr.trim(), DATE_FMT);
                     tasks.add(new Deadline(desc, by));
 
                     saveTasks(tasks);
@@ -115,8 +126,8 @@ public class Zack {
                     String desc = firstSplit[0];
 
                     String[] secondSplit = firstSplit[1].split("/to", 2);
-                    String from = secondSplit[0];
-                    String to = secondSplit[1];
+                    LocalDate from = LocalDate.parse(secondSplit[0].trim(), DATE_FMT);
+                    LocalDate to = LocalDate.parse(secondSplit[1].trim(), DATE_FMT);
 
                     tasks.add(new Event(desc, from, to));
 
@@ -177,10 +188,11 @@ public class Zack {
         }
         if (t instanceof Deadline) {
             Deadline d = (Deadline) t;
-            return "D | " + done + " | " + d.getDescription() + " | " + d.getBy();
+            return "D | " + done + " | " + d.getDescription() + " | " + d.getBy().format(DATE_FMT);
         }
         Event e = (Event) t;
-        return "E | " + done + " | " + e.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
+        return "E | " + done + " | " + e.getDescription() + " | " + e.getFrom().format(DATE_FMT)
+                + " | " + e.getTo().format(DATE_FMT);
     }
 
     private static ArrayList<Task> loadTasks() {
@@ -227,13 +239,20 @@ public class Zack {
                 break;
 
             case "D":
-                if (parts.length < 4) return null;
-                t = new Deadline(desc, parts[3]);
+                if (parts.length < 4) {
+                    return null;
+                }
+                LocalDate by = LocalDate.parse(parts[3], DATE_FMT);
+                t = new Deadline(desc, by);
                 break;
 
             case "E":
-                if (parts.length < 5) return null;
-                t = new Event(desc, parts[3], parts[4]);
+                if (parts.length < 5) {
+                    return null;
+                }
+                LocalDate from = LocalDate.parse(parts[3], DATE_FMT);
+                LocalDate to = LocalDate.parse(parts[4], DATE_FMT);
+                t = new Event(desc, from, to);
                 break;
 
             default:
