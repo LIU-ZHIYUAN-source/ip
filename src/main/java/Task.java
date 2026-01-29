@@ -23,6 +23,10 @@ public abstract class Task {
         return this.isDone ? "[X]" : "[ ]";
     }
 
+    public Boolean isDone() {
+        return this.isDone;
+    }
+
     public abstract String getType();
     public abstract String toDisplayString();
 }
