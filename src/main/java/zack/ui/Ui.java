@@ -1,3 +1,7 @@
+package zack.ui;
+
+import zack.task.Task;
+
 public class Ui {
     String line = "____________________________________________________________";
 
@@ -7,7 +11,7 @@ public class Ui {
 
     public void showWelcome() {
         showLine();
-        System.out.println("    Hello! I'm Zack");
+        System.out.println("    Hello! I'm Zack.Zack");
         System.out.println("    What can I do for you?");
         showLine();
     }

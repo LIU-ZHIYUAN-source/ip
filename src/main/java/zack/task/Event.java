@@ -1,8 +1,10 @@
+package zack.task;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class Event extends Task{
+public class Event extends Task {
     private LocalDate from;
     private LocalDate to;
 

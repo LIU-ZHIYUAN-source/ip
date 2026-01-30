@@ -1,3 +1,5 @@
+package zack.task;
+
 public abstract class Task {
     protected String description;
     private boolean isDone;
