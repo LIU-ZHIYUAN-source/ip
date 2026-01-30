@@ -1,3 +1,12 @@
+package zack;
+
+import zack.exception.ZackException;
+import zack.parser.Parser;
+import zack.storage.Storage;
+import zack.task.Task;
+import zack.task.TaskList;
+import zack.ui.Ui;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;

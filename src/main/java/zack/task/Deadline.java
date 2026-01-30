@@ -1,8 +1,10 @@
+package zack.task;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class Deadline extends Task{
+public class Deadline extends Task {
     private LocalDate by;
 
     public Deadline(String description, LocalDate by) {
