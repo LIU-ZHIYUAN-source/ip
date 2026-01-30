@@ -1,2 +1,4 @@
-D | 0 | return book  | 2019-10-15
-E | 0 | project meeting  | 2019-10-15 | 2019-10-16
+T | 1 | sleap
+T | 0 | read book
+D | 0 | return book | 2019-10-15
+E | 0 | meeting | 2019-10-15 | 2019-10-16
