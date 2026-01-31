@@ -14,6 +14,9 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents the main entry point of the Zack application.
+ */
 public class Zack {
     private static final Path DATA_DIR = Paths.get("data");
     private static final Path DATA_FILE = DATA_DIR.resolve("zack.txt");
@@ -24,6 +27,9 @@ public class Zack {
     private final TaskList tasks;
     private final Scanner scanner;
 
+    /**
+     * Constructs a new instance.
+     */
     public Zack(){
         this.ui = new Ui();
         this.storage = new Storage(DATA_DIR, DATA_FILE);
@@ -39,6 +45,9 @@ public class Zack {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Runs the main application loop.
+     */
     public void run(){
         ui.showWelcome();
 
@@ -119,6 +128,11 @@ public class Zack {
         }
     }
 
+    /**
+     * Starts the application.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         new Zack().run();
     }
