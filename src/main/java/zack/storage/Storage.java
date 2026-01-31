@@ -16,16 +16,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Handles saving tasks to disk and loading tasks from disk.
+ */
 public class Storage {
     private final Path dataDir;
     private final Path dataFile;
     private final DateTimeFormatter dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
 
+    /**
+     * Constructs a storage component using the given directory and file path.
+     *
+     * @param dataDir Directory used to store the data file.
+     * @param dataFile File path used to save and load tasks.
+     */
     public Storage(Path dataDir, Path dataFile) {
         this.dataDir = dataDir;
         this.dataFile = dataFile;
     }
 
+    /**
+     * Saves the given tasks to disk.
+     *
+     * @param tasks List of tasks to be saved.
+     * @throws ZackException If the tasks cannot be saved.
+     */
     public void save(ArrayList<Task> tasks) throws ZackException {
         try {
             Files.createDirectories(dataDir);
@@ -40,6 +55,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from disk.
+     *
+     * @return List of tasks loaded from disk.
+     * @throws ZackException If the tasks cannot be loaded.
+     */
     public ArrayList<Task> load() throws ZackException {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -65,6 +86,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Encodes a task into a single-line string for saving.
+     *
+     * @param t Task to be encoded.
+     * @return Encoded string representation of the task.
+     */
     private String encodeTask(Task t) {
         String done = t.isDone() ? "1" : "0";
 
@@ -80,6 +107,12 @@ public class Storage {
                 + " | " + e.getTo().format(dateFmt);
     }
 
+    /**
+     * Decodes a single-line string into a task.
+     *
+     * @param line Encoded task string.
+     * @return Decoded task, null if the line is invalid.
+     */
     private Task decodeTask(String line) {
         String[] parts = line.split("\\s*\\|\\s*");
 

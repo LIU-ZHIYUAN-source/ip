@@ -9,12 +9,38 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Parses user input strings into tasks and indexes.
+ */
 public class Parser {
+    /**
+     * Parses the index from the given command input.
+     *
+     * @param input Full user input string.
+     * @param keyword Command keyword.
+     * @return Zero-based index.
+     * @throws ZackException If the index is missing or invalid.
+     */
     public static int parseIndex(String input, String keyword) throws ZackException {
-        String num = input.substring(keyword.length()).trim();
-        return Integer.parseInt(num) - 1;
+        try{
+            String num = input.substring(keyword.length()).trim();
+            int index = Integer.parseInt(num) - 1;
+            if (index < 0) {
+                throw new ZackException("OOPS!!! Index must be a positive number.");
+            }
+            return index;
+        } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
+            throw new ZackException("OOPS!!! Please provide a valid index.");
+        }
     }
 
+    /**
+     * Parses a todo command.
+     *
+     * @param input Full user string.
+     * @return A Todo task.
+     * @throws ZackException If the input is invalid.
+     */
     public static Todo parseTodo(String input) throws ZackException {
         if (input.equals("todo")) {
             throw new ZackException("OOPS!!! The description of a todo cannot be empty.");
@@ -26,6 +52,14 @@ public class Parser {
         return new Todo(desc);
     }
 
+    /**
+     * Parses a deadline command.
+     *
+     * @param input Full user input string.
+     * @param dateFmt Date format used to parse the deadline date.
+     * @return A Deadline task.
+     * @throws ZackException If the input is invalid.
+     */
     public static Deadline parseDeadline(String input, DateTimeFormatter dateFmt) throws ZackException {
         String rest = input.substring(9);
         String[] parts = rest.split("/by", 2);
@@ -48,6 +82,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses an event command.
+     *
+     * @param input Full user input string.
+     * @param dateFmt Date format used to parse the event dates.
+     * @return An Event task.
+     * @throws ZackException If the input is invalid.
+     */
     public static Event parseEvent(String input, DateTimeFormatter dateFmt) throws ZackException {
         String rest = input.substring(6);
         String[] firstSplit = rest.split("/from", 2);
