@@ -118,6 +118,24 @@ public class Zack {
                     continue;
                 }
 
+                if (input.startsWith("find ")) {
+                    String keyword = input.substring(5).trim();
+
+                    if (keyword.isEmpty()) {
+                        throw new ZackException("OOPS!!! The search keyword cannot be empty.");
+                    }
+
+                    ArrayList<Task> matched = new ArrayList<>();
+                    for (Task task : tasks.getTasks()) {
+                        if (task.getDescription().contains(keyword)) {
+                            matched.add(task);
+                        }
+                    }
+
+                    ui.showFindResult(matched);
+                    continue;
+                }
+
                 System.out.println("    added: " + input);
                 ui.showLine();
 
