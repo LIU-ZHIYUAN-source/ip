@@ -1,13 +1,12 @@
 package zack.parser;
 
-import zack.exception.ZackException;
-import zack.task.Deadline;
-import zack.task.Todo;
-import zack.task.Event;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import zack.exception.ZackException;
+import zack.task.Deadline;
+import zack.task.Event;
+import zack.task.Todo;
 
 /**
  * Parses user input strings into tasks and indexes.
@@ -16,13 +15,13 @@ public class Parser {
     /**
      * Parses the index from the given command input.
      *
-     * @param input Full user input string.
+     * @param input   Full user input string.
      * @param keyword Command keyword.
      * @return Zero-based index.
      * @throws ZackException If the index is missing or invalid.
      */
     public static int parseIndex(String input, String keyword) throws ZackException {
-        try{
+        try {
             String num = input.substring(keyword.length()).trim();
             int index = Integer.parseInt(num) - 1;
             if (index < 0) {
@@ -55,7 +54,7 @@ public class Parser {
     /**
      * Parses a deadline command.
      *
-     * @param input Full user input string.
+     * @param input   Full user input string.
      * @param dateFmt Date format used to parse the deadline date.
      * @return A Deadline task.
      * @throws ZackException If the input is invalid.
@@ -85,7 +84,7 @@ public class Parser {
     /**
      * Parses an event command.
      *
-     * @param input Full user input string.
+     * @param input   Full user input string.
      * @param dateFmt Date format used to parse the event dates.
      * @return An Event task.
      * @throws ZackException If the input is invalid.

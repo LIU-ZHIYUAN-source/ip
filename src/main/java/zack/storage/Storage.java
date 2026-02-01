@@ -1,11 +1,5 @@
 package zack.storage;
 
-import zack.exception.ZackException;
-import zack.task.Deadline;
-import zack.task.Task;
-import zack.task.Event;
-import zack.task.Todo;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,6 +9,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import zack.exception.ZackException;
+import zack.task.Deadline;
+import zack.task.Event;
+import zack.task.Task;
+import zack.task.Todo;
 
 /**
  * Handles saving tasks to disk and loading tasks from disk.
@@ -27,7 +26,7 @@ public class Storage {
     /**
      * Constructs a storage component using the given directory and file path.
      *
-     * @param dataDir Directory used to store the data file.
+     * @param dataDir  Directory used to store the data file.
      * @param dataFile File path used to save and load tasks.
      */
     public Storage(Path dataDir, Path dataFile) {
@@ -127,26 +126,29 @@ public class Storage {
         Task t;
 
         switch (type) {
-            case "T":
-                t = new Todo(desc);
-                break;
-            case "D":
-                if (parts.length < 4) {
-                    return null;
-                }
-                LocalDate by = LocalDate.parse(parts[3], dateFmt);
-                t = new Deadline(desc, by);
-                break;
-            case "E":
-                if (parts.length < 5) {
-                    return null;
-                }
-                LocalDate from = LocalDate.parse(parts[3], dateFmt);
-                LocalDate to = LocalDate.parse(parts[4], dateFmt);
-                t = new Event(desc, from, to);
-                break;
-            default:
+        case "T": {
+            t = new Todo(desc);
+            break;
+        }
+        case "D": {
+            if (parts.length < 4) {
                 return null;
+            }
+            LocalDate by = LocalDate.parse(parts[3], dateFmt);
+            t = new Deadline(desc, by);
+            break;
+        }
+        case "E": {
+            if (parts.length < 5) {
+                return null;
+            }
+            LocalDate from = LocalDate.parse(parts[3], dateFmt);
+            LocalDate to = LocalDate.parse(parts[4], dateFmt);
+            t = new Event(desc, from, to);
+            break;
+        }
+        default:
+            return null;
         }
 
         if (done) {
