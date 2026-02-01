@@ -1,18 +1,17 @@
 package zack;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Scanner;
 import zack.exception.ZackException;
 import zack.parser.Parser;
 import zack.storage.Storage;
 import zack.task.Task;
 import zack.task.TaskList;
 import zack.ui.Ui;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Represents the main entry point of the Zack application.
@@ -30,7 +29,7 @@ public class Zack {
     /**
      * Constructs a new instance.
      */
-    public Zack(){
+    public Zack() {
         this.ui = new Ui();
         this.storage = new Storage(DATA_DIR, DATA_FILE);
 
@@ -48,7 +47,7 @@ public class Zack {
     /**
      * Runs the main application loop.
      */
-    public void run(){
+    public void run() {
         ui.showWelcome();
 
         while (true) {

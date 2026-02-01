@@ -1,6 +1,7 @@
 package zack.task;
 
 import java.util.ArrayList;
+
 /**
  * Represents a list of tasks.
  */

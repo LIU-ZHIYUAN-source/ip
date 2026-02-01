@@ -12,7 +12,7 @@ public abstract class Task {
      *
      * @param description Description of the task.
      */
-    public Task(String description){
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
@@ -20,14 +20,14 @@ public abstract class Task {
     /**
      * Marks the task as done.
      */
-    public void markDone(){
+    public void markDone() {
         this.isDone = true;
     }
 
     /**
      * Marks the task as not done.
      */
-    public void markNotDone(){
+    public void markNotDone() {
         this.isDone = false;
     }
 
@@ -54,7 +54,7 @@ public abstract class Task {
      *
      * @return true if the task is done, otherwise false.
      */
-    public Boolean isDone() {
+    public boolean isDone() {
         return this.isDone;
     }
 
@@ -64,6 +64,7 @@ public abstract class Task {
      * @return Task type.
      */
     public abstract String getType();
+
     /**
      * Returns the display string of the task.
      *
