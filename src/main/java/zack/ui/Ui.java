@@ -1,6 +1,7 @@
 package zack.ui;
 
 import java.util.ArrayList;
+
 import zack.task.Task;
 
 /**
@@ -8,13 +9,13 @@ import zack.task.Task;
  * Responsible for displaying messages to the user.
  */
 public class Ui {
-    String line = "____________________________________________________________";
+    private static final String LINE = "____________________________________________________________";
 
     /**
      * Displays a horizontal separator line.
      */
     public void showLine() {
-        System.out.println("  " + line);
+        System.out.println("  " + LINE);
     }
 
     /**

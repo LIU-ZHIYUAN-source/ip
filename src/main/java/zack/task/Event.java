@@ -8,20 +8,20 @@ import java.util.Locale;
  * Represents an event task with a start date and an end date.
  */
 public class Event extends Task {
-    private LocalDate from;
-    private LocalDate to;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     /**
      * Constructs an event task with the given description and dates.
      *
      * @param description Description of the event.
-     * @param from        Start date of the event.
-     * @param to          End date of the event.
+     * @param startDate   Start date of the event.
+     * @param endDate     End date of the event.
      */
-    public Event(String description, LocalDate from, LocalDate to) {
+    public Event(String description, LocalDate startDate, LocalDate endDate) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     /**
@@ -29,8 +29,8 @@ public class Event extends Task {
      *
      * @return Start date.
      */
-    public LocalDate getFrom() {
-        return this.from;
+    public LocalDate getStartDate() {
+        return this.startDate;
     }
 
     /**
@@ -38,8 +38,8 @@ public class Event extends Task {
      *
      * @return End date.
      */
-    public LocalDate getTo() {
-        return this.to;
+    public LocalDate getEndDate() {
+        return this.endDate;
     }
 
 
@@ -62,6 +62,6 @@ public class Event extends Task {
     public String toDisplayString() {
         DateTimeFormatter outFmt = DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.ENGLISH);
         return "[E]" + getStatus() + " " + description
-                + " (from: " + from.format(outFmt) + " to: " + to.format(outFmt) + ")";
+                + " (from: " + startDate.format(outFmt) + " to: " + endDate.format(outFmt) + ")";
     }
 }

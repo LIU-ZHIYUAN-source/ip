@@ -3,6 +3,7 @@ package zack.parser;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
 import zack.exception.ZackException;
 import zack.task.Deadline;
 import zack.task.Event;
@@ -67,15 +68,15 @@ public class Parser {
         }
 
         String desc = parts[0].trim();
-        String byStr = parts[1].trim();
+        String dueStr = parts[1].trim();
 
-        if (desc.isEmpty() || byStr.isEmpty()) {
+        if (desc.isEmpty() || dueStr.isEmpty()) {
             throw new ZackException("OOPS!!! Usage: deadline <description> /by yyyy-mm-dd");
         }
 
         try {
-            LocalDate by = LocalDate.parse(byStr, dateFmt);
-            return new Deadline(desc, by);
+            LocalDate dueDate = LocalDate.parse(dueStr, dateFmt);
+            return new Deadline(desc, dueDate);
         } catch (DateTimeParseException e) {
             throw new ZackException("OOPS!!! Date must be yyyy-mm-dd");
         }
@@ -102,17 +103,17 @@ public class Parser {
             throw new ZackException("OOPS!!! Usage: event <description> /from yyyy-mm-dd /to yyyy-mm-dd");
         }
 
-        String fromStr = secondSplit[0].trim();
-        String toStr = secondSplit[1].trim();
+        String startStr = secondSplit[0].trim();
+        String endStr = secondSplit[1].trim();
 
-        if (desc.isEmpty() || fromStr.isEmpty() || toStr.isEmpty()) {
+        if (desc.isEmpty() || startStr.isEmpty() || endStr.isEmpty()) {
             throw new ZackException("OOPS!!! Usage: event <description> /from yyyy-mm-dd /to yyyy-mm-dd");
         }
 
         try {
-            LocalDate from = LocalDate.parse(fromStr, dateFmt);
-            LocalDate to = LocalDate.parse(toStr, dateFmt);
-            return new Event(desc, from, to);
+            LocalDate startDate = LocalDate.parse(startStr, dateFmt);
+            LocalDate endDate = LocalDate.parse(endStr, dateFmt);
+            return new Event(desc, startDate, endDate);
         } catch (DateTimeParseException e) {
             throw new ZackException("OOPS!!! Date must be yyyy-mm-dd");
         }
