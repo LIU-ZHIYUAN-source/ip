@@ -8,17 +8,17 @@ import java.util.Locale;
  * Represents a deadline task with a due date.
  */
 public class Deadline extends Task {
-    private LocalDate by;
+    private LocalDate dueDate;
 
     /**
      * Constructs a deadline task with the given description and due date.
      *
      * @param description Description of the deadline.
-     * @param by          Due date of the deadline.
+     * @param dueDate     Due date of the deadline.
      */
-    public Deadline(String description, LocalDate by) {
+    public Deadline(String description, LocalDate dueDate) {
         super(description);
-        this.by = by;
+        this.dueDate = dueDate;
     }
 
     /**
@@ -26,8 +26,8 @@ public class Deadline extends Task {
      *
      * @return Due date.
      */
-    public LocalDate getBy() {
-        return this.by;
+    public LocalDate getDueDate() {
+        return this.dueDate;
     }
 
     /**
@@ -48,6 +48,6 @@ public class Deadline extends Task {
     @Override
     public String toDisplayString() {
         DateTimeFormatter outFmt = DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.ENGLISH);
-        return "[D]" + getStatus() + " " + description + " (by: " + by.format(outFmt) + ")";
+        return "[D]" + getStatus() + " " + description + " (by: " + dueDate.format(outFmt) + ")";
     }
 }

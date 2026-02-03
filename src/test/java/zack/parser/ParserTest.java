@@ -1,11 +1,13 @@
 package zack.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import zack.exception.ZackException;
 import zack.task.Todo;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ParserTest {
 

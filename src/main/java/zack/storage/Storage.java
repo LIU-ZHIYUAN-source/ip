@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import zack.exception.ZackException;
 import zack.task.Deadline;
 import zack.task.Event;
@@ -99,11 +100,11 @@ public class Storage {
         }
         if (t instanceof Deadline) {
             Deadline d = (Deadline) t;
-            return "D | " + done + " | " + d.getDescription() + " | " + d.getBy().format(dateFmt);
+            return "D | " + done + " | " + d.getDescription() + " | " + d.getDueDate().format(dateFmt);
         }
         Event e = (Event) t;
-        return "E | " + done + " | " + e.getDescription() + " | " + e.getFrom().format(dateFmt)
-                + " | " + e.getTo().format(dateFmt);
+        return "E | " + done + " | " + e.getDescription() + " | " + e.getStartDate().format(dateFmt)
+                + " | " + e.getEndDate().format(dateFmt);
     }
 
     /**
