@@ -48,7 +48,6 @@ test {
 }
 
 application {
-    /*mainClass.set("zack.Zack")*/
     mainClass.set("zack.gui.Launcher")
 }
 
