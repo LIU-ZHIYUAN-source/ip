@@ -53,6 +53,17 @@ public class Event extends Task {
         return "[E]";
     }
 
+    @Override
+    public boolean hasDate() {
+        return true;
+    }
+
+    @Override
+    public java.time.LocalDate getSortDate() {
+        return endDate;
+    }
+
+
     /**
      * Returns the display string of the event task.
      *

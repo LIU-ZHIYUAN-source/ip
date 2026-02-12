@@ -40,6 +40,17 @@ public class Deadline extends Task {
         return "[D]";
     }
 
+    @Override
+    public boolean hasDate() {
+        return true;
+    }
+
+    @Override
+    public java.time.LocalDate getSortDate() {
+        return dueDate;
+    }
+
+
     /**
      * Returns the display string of the deadline task.
      *

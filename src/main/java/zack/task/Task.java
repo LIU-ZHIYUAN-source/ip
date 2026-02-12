@@ -58,6 +58,14 @@ public abstract class Task {
         return this.isDone;
     }
 
+    public boolean hasDate() {
+        return false;
+    }
+
+    public java.time.LocalDate getSortDate() {
+        return null;
+    }
+
     /**
      * Returns the type identifier of the task.
      *
