@@ -36,14 +36,14 @@ public class Zack {
         this.ui = new Ui();
         this.storage = new Storage(DATA_DIR, DATA_FILE);
 
-        ArrayList<Task> loaded;
+        ArrayList<Task> loadedTasks;
         try {
-            loaded = storage.load();
+            loadedTasks = storage.load();
         } catch (ZackException e) {
             ui.showError(e.getMessage());
-            loaded = new ArrayList<>();
+            loadedTasks = new ArrayList<>();
         }
-        this.tasks = new TaskList(loaded);
+        this.tasks = new TaskList(loadedTasks);
         this.scanner = new Scanner(System.in);
     }
 
@@ -181,97 +181,38 @@ public class Zack {
             }
 
             if (input.equals("list")) {
-                if (tasks.size() == 0) {
-                    return "Your task list is empty.";
-                }
-
-                StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
-                for (int i = 0; i < tasks.size(); i++) {
-                    sb.append(i + 1)
-                            .append(". ")
-                            .append(tasks.get(i).toDisplayString())
-                            .append("\n");
-                }
-                return sb.toString().trim();
+                return handleList();
             }
 
             if (input.startsWith("mark ")) {
-                int idx = Parser.parseIndex(input, "mark");
-                Task task = tasks.get(idx);
-                task.markDone();
-                storage.save(tasks.getTasks());
-                return "Nice! I've marked this task as done:\n" + task.toDisplayString();
+                return handleMark(input);
             }
 
             if (input.startsWith("unmark ")) {
-                int idx = Parser.parseIndex(input, "unmark");
-                Task task = tasks.get(idx);
-                task.markNotDone();
-                storage.save(tasks.getTasks());
-                return "OK, I've marked this task as not done yet:\n" + task.toDisplayString();
+                return handleUnmark(input);
             }
 
             if (input.startsWith("todo ") || input.equals("todo")) {
                 Task task = Parser.parseTodo(input);
-                tasks.add(task);
-                storage.save(tasks.getTasks());
-                return "Got it. I've added this task:\n"
-                        + task.toDisplayString()
-                        + "\nNow you have " + tasks.size() + " tasks in the list.";
+                return handleAdd(task);
             }
 
             if (input.startsWith("deadline ")) {
                 Task task = Parser.parseDeadline(input, DATE_FMT);
-                tasks.add(task);
-                storage.save(tasks.getTasks());
-                return "Got it. I've added this task:\n"
-                        + task.toDisplayString()
-                        + "\nNow you have " + tasks.size() + " tasks in the list.";
+                return handleAdd(task);
             }
 
             if (input.startsWith("event ")) {
                 Task task = Parser.parseEvent(input, DATE_FMT);
-                tasks.add(task);
-                storage.save(tasks.getTasks());
-                return "Got it. I've added this task:\n"
-                        + task.toDisplayString()
-                        + "\nNow you have " + tasks.size() + " tasks in the list.";
+                return handleAdd(task);
             }
 
             if (input.startsWith("delete ")) {
-                int idx = Parser.parseIndex(input, "delete");
-                Task removed = tasks.remove(idx);
-                storage.save(tasks.getTasks());
-                return "Noted. I've removed this task:\n"
-                        + removed.toDisplayString()
-                        + "\nNow you have " + tasks.size() + " tasks in the list.";
+                return handleDelete(input);
             }
 
             if (input.startsWith("find ")) {
-                String keyword = input.substring(5).trim();
-                if (keyword.isEmpty()) {
-                    throw new ZackException("The search keyword cannot be empty.");
-                }
-
-                ArrayList<Task> matched = new ArrayList<>();
-                for (Task task : tasks.getTasks()) {
-                    if (task.getDescription().contains(keyword)) {
-                        matched.add(task);
-                    }
-                }
-
-                if (matched.isEmpty()) {
-                    return "I couldn't find any matching tasks.";
-                }
-
-                StringBuilder sb = new StringBuilder("Here are the matching tasks:\n");
-                for (int i = 0; i < matched.size(); i++) {
-                    sb.append(i + 1)
-                            .append(". ")
-                            .append(matched.get(i).toDisplayString())
-                            .append("\n");
-                }
-                return sb.toString().trim();
+                return handleFind(input);
             }
 
             throw new ZackException("OOPS!!! I'm sorry, but I don't know what that means :-(");
@@ -287,5 +228,80 @@ public class Zack {
      */
     public boolean isExit() {
         return isExit;
+    }
+
+    private String handleList() {
+        if (tasks.size() == 0) {
+            return "Your task list is empty.";
+        }
+
+        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            sb.append(i + 1)
+                    .append(". ")
+                    .append(tasks.get(i).toDisplayString())
+                    .append("\n");
+        }
+        return sb.toString().trim();
+    }
+
+    private String handleAdd(Task task) throws ZackException {
+        tasks.add(task);
+        storage.save(tasks.getTasks());
+        return "Got it. I've added this task:\n"
+                + task.toDisplayString()
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
+    }
+
+    private String handleMark(String input) throws ZackException {
+        int idx = Parser.parseIndex(input, "mark");
+        Task task = tasks.get(idx);
+        task.markDone();
+        storage.save(tasks.getTasks());
+        return "Nice! I've marked this task as done:\n" + task.toDisplayString();
+    }
+
+    private String handleUnmark(String input) throws ZackException {
+        int idx = Parser.parseIndex(input, "unmark");
+        Task task = tasks.get(idx);
+        task.markNotDone();
+        storage.save(tasks.getTasks());
+        return "OK, I've marked this task as not done yet:\n" + task.toDisplayString();
+    }
+
+    private String handleDelete(String input) throws ZackException {
+        int idx = Parser.parseIndex(input, "delete");
+        Task removed = tasks.remove(idx);
+        storage.save(tasks.getTasks());
+        return "Noted. I've removed this task:\n"
+                + removed.toDisplayString()
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
+    }
+
+    private String handleFind(String input) throws ZackException {
+        String keyword = input.substring(5).trim();
+        if (keyword.isEmpty()) {
+            throw new ZackException("The search keyword cannot be empty.");
+        }
+
+        ArrayList<Task> matched = new ArrayList<>();
+        for (Task task : tasks.getTasks()) {
+            if (task.getDescription().contains(keyword)) {
+                matched.add(task);
+            }
+        }
+
+        if (matched.isEmpty()) {
+            return "I couldn't find any matching tasks.";
+        }
+
+        StringBuilder sb = new StringBuilder("Here are the matching tasks:\n");
+        for (int i = 0; i < matched.size(); i++) {
+            sb.append(i + 1)
+                    .append(". ")
+                    .append(matched.get(i).toDisplayString())
+                    .append("\n");
+        }
+        return sb.toString().trim();
     }
 }
