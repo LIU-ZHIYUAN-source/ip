@@ -22,6 +22,11 @@ public class Parser {
      * @throws ZackException If the index is missing or invalid.
      */
     public static int parseIndex(String input, String keyword) throws ZackException {
+
+        assert input != null : "input should not be null";
+        assert keyword != null && !keyword.isBlank() : "keyword should not be blank";
+        assert input.startsWith(keyword) : "input should start with the given keyword";
+
         try {
             String num = input.substring(keyword.length()).trim();
             int index = Integer.parseInt(num) - 1;

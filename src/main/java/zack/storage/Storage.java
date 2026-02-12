@@ -102,6 +102,7 @@ public class Storage {
             Deadline d = (Deadline) t;
             return "D | " + done + " | " + d.getDescription() + " | " + d.getDueDate().format(dateFmt);
         }
+        assert t instanceof Event : "Unexpected Task subtype: " + t.getClass();
         Event e = (Event) t;
         return "E | " + done + " | " + e.getDescription() + " | " + e.getStartDate().format(dateFmt)
                 + " | " + e.getEndDate().format(dateFmt);
@@ -114,6 +115,7 @@ public class Storage {
      * @return Decoded task, null if the line is invalid.
      */
     private Task decodeTask(String line) {
+        assert line != null : "Encoded line should not be null";
         String[] parts = line.split("\\s*\\|\\s*");
 
         if (parts.length < 3) {
