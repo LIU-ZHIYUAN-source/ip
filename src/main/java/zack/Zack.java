@@ -215,6 +215,10 @@ public class Zack {
                 return handleFind(input);
             }
 
+            if (input.equals("sort")) {
+                return sortTasks();
+            }
+
             throw new ZackException("OOPS!!! I'm sorry, but I don't know what that means :-(");
 
         } catch (ZackException e) {
@@ -303,5 +307,26 @@ public class Zack {
                     .append("\n");
         }
         return sb.toString().trim();
+    }
+
+    private String sortTasks() throws ZackException {
+        tasks.getTasks().sort((a, b) -> {
+            boolean aHas = a.hasDate();
+            boolean bHas = b.hasDate();
+
+            if (aHas && bHas) {
+                return a.getSortDate().compareTo(b.getSortDate());
+            }
+            if (aHas) {
+                return -1;
+            }
+            if (bHas) {
+                return 1;
+            }
+            return 0;
+        });
+
+        storage.save(tasks.getTasks());
+        return "OK, I've sorted your tasks by date.";
     }
 }
