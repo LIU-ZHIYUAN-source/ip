@@ -2,6 +2,8 @@ package zack.task;
 
 import java.util.ArrayList;
 
+import zack.exception.ZackException;
+
 /**
  * Represents a list of tasks.
  */
@@ -26,14 +28,10 @@ public class TaskList {
         return tasks.size();
     }
 
-    /**
-     * Returns the task at the given index.
-     *
-     * @param index index of the task.
-     * @return Task at the given index.
-     */
-    public Task get(int index) {
-        assert index >= 0 && index < tasks.size() : "Index out of bounds: " + index;
+    public Task get(int index) throws ZackException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new ZackException("OOPS!!! Index is out of bounds.");
+        }
         return tasks.get(index);
     }
 
@@ -46,14 +44,10 @@ public class TaskList {
         tasks.add(task);
     }
 
-    /**
-     * Removes and returns the task at the given index.
-     *
-     * @param index index of the task.
-     * @return Removed task.
-     */
-    public Task remove(int index) {
-        assert index >= 0 && index < tasks.size() : "Index out of bounds: " + index;
+    public Task remove(int index) throws ZackException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new ZackException("OOPS!!! Index is out of bounds.");
+        }
         return tasks.remove(index);
     }
 
@@ -64,5 +58,32 @@ public class TaskList {
      */
     public ArrayList<Task> getTasks() {
         return tasks;
+    }
+
+    public ArrayList<Task> find(String keyword) {
+        ArrayList<Task> result = new ArrayList<>();
+        String key = keyword.trim().toLowerCase();
+
+        for (Task t : tasks) {
+            if (t.getDescription().toLowerCase().contains(key)) {
+                result.add(t);
+            }
+        }
+        return result;
+    }
+
+    public void sortByDate() {
+        tasks.sort((a, b) -> {
+            if (a.hasDate() && b.hasDate()) {
+                return a.getSortDate().compareTo(b.getSortDate());
+            }
+            if (a.hasDate()) {
+                return -1;
+            }
+            if (b.hasDate()) {
+                return 1;
+            }
+            return 0;
+        });
     }
 }
