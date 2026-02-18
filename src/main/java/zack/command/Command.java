@@ -8,7 +8,9 @@ import zack.model.Model;
 //and I am also inspired by https://github.com/NUS-CS2103-AY2526-S2/ip/pull/367,
 //but all the code below are implemented by myself.
 
-
+/**
+ * Represents an executable command in the Zack application.
+ */
 public interface Command {
     /**
      * Executes this command using the given model.

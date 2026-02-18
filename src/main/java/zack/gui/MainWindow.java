@@ -34,6 +34,10 @@ public class MainWindow extends AnchorPane {
     private final Image zackImage =
             new Image(this.getClass().getResourceAsStream("/images/DaZack.png"));
 
+    /**
+     * Initializes the main window after the FXML components are loaded.
+     * Sets up auto-scrolling and displays the initial welcome message.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
@@ -43,7 +47,9 @@ public class MainWindow extends AnchorPane {
         );
     }
 
-    /** Injects the Zack instance */
+    /**
+     * Injects the Zack instance
+     */
     public void setZack(Zack z) {
         zack = z;
     }

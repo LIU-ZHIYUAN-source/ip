@@ -3,6 +3,9 @@ package zack.command;
 import zack.exception.ZackException;
 import zack.model.Model;
 
+/**
+ * Sorts tasks by date.
+ */
 public class SortCommand implements Command {
 
     @Override

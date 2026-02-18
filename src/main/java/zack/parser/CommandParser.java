@@ -8,6 +8,7 @@ import zack.command.ExitCommand;
 import zack.command.FindCommand;
 import zack.command.ListCommand;
 import zack.command.MarkCommand;
+import zack.command.SortCommand;
 import zack.command.TodoCommand;
 import zack.command.UnmarkCommand;
 import zack.exception.ZackException;
@@ -59,6 +60,9 @@ public class CommandParser {
 
         case "find":
             return new FindCommand(userInput);
+
+        case "sort":
+            return new SortCommand();
 
         default:
             throw new ZackException("OOPS!!! I'm sorry, but I don't know what that means :-(");

@@ -28,6 +28,13 @@ public class TaskList {
         return tasks.size();
     }
 
+    /**
+     * Returns the task at the given index.
+     *
+     * @param index Index of the task (0-based).
+     * @return The task at the given index.
+     * @throws ZackException If the index is out of bounds.
+     */
     public Task get(int index) throws ZackException {
         if (index < 0 || index >= tasks.size()) {
             throw new ZackException("OOPS!!! Index is out of bounds.");
@@ -44,6 +51,13 @@ public class TaskList {
         tasks.add(task);
     }
 
+    /**
+     * Removes and returns the task at the given index.
+     *
+     * @param index Index of the task to remove (0-based).
+     * @return The removed task.
+     * @throws ZackException If the index is out of bounds.
+     */
     public Task remove(int index) throws ZackException {
         if (index < 0 || index >= tasks.size()) {
             throw new ZackException("OOPS!!! Index is out of bounds.");
@@ -60,6 +74,12 @@ public class TaskList {
         return tasks;
     }
 
+    /**
+     * Finds all tasks whose descriptions contain the given keyword (case-insensitive).
+     *
+     * @param keyword Keyword to search for.
+     * @return A list of matching tasks.
+     */
     public ArrayList<Task> find(String keyword) {
         ArrayList<Task> result = new ArrayList<>();
         String key = keyword.trim().toLowerCase();
@@ -72,6 +92,10 @@ public class TaskList {
         return result;
     }
 
+    /**
+     * Sorts tasks by date, placing dated tasks before undated tasks.
+     * Dated tasks are ordered by their date in ascending order.
+     */
     public void sortByDate() {
         tasks.sort((a, b) -> {
             if (a.hasDate() && b.hasDate()) {

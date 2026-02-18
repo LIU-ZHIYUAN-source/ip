@@ -14,32 +14,62 @@ import zack.task.TaskList;
 import zack.task.Todo;
 
 /**
- * Represents the application state.
+ * Represents the core application logic of Zack.
+ * Handles task operations and coordinates persistence.
  */
 public class Model {
-    private final TaskList taskList;
-    private final Storage storage;
 
     private static final DateTimeFormatter DATE_FMT =
             DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
 
+    private final TaskList taskList;
+    private final Storage storage;
+
+    /**
+     * Constructs a Model with the given task list and storage.
+     *
+     * @param taskList The task list to manage.
+     * @param storage The storage used for persistence.
+     */
     public Model(TaskList taskList, Storage storage) {
         this.taskList = taskList;
         this.storage = storage;
     }
 
+    /**
+     * Returns the underlying task list.
+     *
+     * @return The task list.
+     */
     public TaskList getTaskList() {
         return taskList;
     }
 
+    /**
+     * Returns the number of tasks currently stored.
+     *
+     * @return The task count.
+     */
     public int size() {
         return taskList.size();
     }
 
+    /**
+     * Saves the current task list to storage.
+     *
+     * @throws ZackException If saving fails.
+     */
     private void save() throws ZackException {
         storage.save(taskList.getTasks());
     }
 
+    /**
+     * Marks a task as done.
+     *
+     * @param fullInput The full user input.
+     * @return The updated task.
+     * @throws ZackException If the index is invalid or saving fails.
+     */
     public Task mark(String fullInput) throws ZackException {
         int index = Parser.parseIndex(fullInput, "mark");
         Task t = taskList.get(index);
@@ -48,6 +78,13 @@ public class Model {
         return t;
     }
 
+    /**
+     * Marks a task as not done.
+     *
+     * @param fullInput The full user input.
+     * @return The updated task.
+     * @throws ZackException If the index is invalid or saving fails.
+     */
     public Task unmark(String fullInput) throws ZackException {
         int index = Parser.parseIndex(fullInput, "unmark");
         Task t = taskList.get(index);
@@ -56,6 +93,13 @@ public class Model {
         return t;
     }
 
+    /**
+     * Deletes a task from the list.
+     *
+     * @param fullInput The full user input.
+     * @return The removed task.
+     * @throws ZackException If the index is invalid or saving fails.
+     */
     public Task delete(String fullInput) throws ZackException {
         int index = Parser.parseIndex(fullInput, "delete");
         Task removed = taskList.remove(index);
@@ -63,6 +107,13 @@ public class Model {
         return removed;
     }
 
+    /**
+     * Adds a todo task.
+     *
+     * @param fullInput The full user input.
+     * @return The created Todo task.
+     * @throws ZackException If parsing or saving fails.
+     */
     public Todo addTodo(String fullInput) throws ZackException {
         Todo todo = Parser.parseTodo(fullInput);
         taskList.add(todo);
@@ -70,6 +121,13 @@ public class Model {
         return todo;
     }
 
+    /**
+     * Adds a deadline task.
+     *
+     * @param fullInput The full user input.
+     * @return The created Deadline task.
+     * @throws ZackException If parsing or saving fails.
+     */
     public Deadline addDeadline(String fullInput) throws ZackException {
         Deadline d = Parser.parseDeadline(fullInput, DATE_FMT);
         taskList.add(d);
@@ -77,6 +135,13 @@ public class Model {
         return d;
     }
 
+    /**
+     * Adds an event task.
+     *
+     * @param fullInput The full user input.
+     * @return The created Event task.
+     * @throws ZackException If parsing or saving fails.
+     */
     public Event addEvent(String fullInput) throws ZackException {
         Event e = Parser.parseEvent(fullInput, DATE_FMT);
         taskList.add(e);
@@ -84,6 +149,13 @@ public class Model {
         return e;
     }
 
+    /**
+     * Finds tasks that contain the given keyword.
+     *
+     * @param fullInput The full user input.
+     * @return A list of matching tasks.
+     * @throws ZackException If the keyword is empty.
+     */
     public ArrayList<Task> find(String fullInput) throws ZackException {
         String keyword = fullInput.substring(5).trim();
 
@@ -100,9 +172,13 @@ public class Model {
         return matches;
     }
 
+    /**
+     * Sorts tasks by date and saves the updated list.
+     *
+     * @throws ZackException If saving fails.
+     */
     public void sort() throws ZackException {
         taskList.sortByDate();
         storage.save(taskList.getTasks());
     }
 }
-

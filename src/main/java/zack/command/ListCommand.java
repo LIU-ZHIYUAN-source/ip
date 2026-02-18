@@ -5,6 +5,9 @@ import zack.model.Model;
 import zack.task.Task;
 import zack.task.TaskList;
 
+/**
+ * Lists all tasks currently stored in the task list.
+ */
 public class ListCommand implements Command {
     @Override
     public CommandResult execute(Model model) throws ZackException {
