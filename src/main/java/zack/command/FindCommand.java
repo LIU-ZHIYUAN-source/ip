@@ -1,10 +1,8 @@
 package zack.command;
 
-import java.util.ArrayList;
-
 import zack.exception.ZackException;
 import zack.model.Model;
-import zack.task.Task;
+import zack.task.TaskList;
 
 /**
  * Finds tasks whose descriptions contain a keyword.
@@ -19,13 +17,13 @@ public class FindCommand implements Command {
 
     @Override
     public CommandResult execute(Model model) throws ZackException {
-        ArrayList<Task> matches = model.find(fullInput);
+        TaskList matchedTasks = model.find(fullInput);
 
         StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
-        for (int i = 0; i < matches.size(); i++) {
+        for (int i = 0; i < matchedTasks.size(); i++) {
             sb.append(i + 1)
                     .append(". ")
-                    .append(matches.get(i).toDisplayString())
+                    .append(matchedTasks.get(i).toDisplayString())
                     .append("\n");
         }
 

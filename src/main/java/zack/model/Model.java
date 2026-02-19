@@ -29,7 +29,7 @@ public class Model {
      * Constructs a Model with the given task list and storage.
      *
      * @param taskList The task list to manage.
-     * @param storage The storage used for persistence.
+     * @param storage  The storage used for persistence.
      */
     public Model(TaskList taskList, Storage storage) {
         this.taskList = taskList;
@@ -72,10 +72,10 @@ public class Model {
      */
     public Task mark(String fullInput) throws ZackException {
         int index = Parser.parseIndex(fullInput, "mark");
-        Task t = taskList.get(index);
-        t.markDone();
+        Task task = taskList.get(index);
+        task.markDone();
         save();
-        return t;
+        return task;
     }
 
     /**
@@ -87,10 +87,10 @@ public class Model {
      */
     public Task unmark(String fullInput) throws ZackException {
         int index = Parser.parseIndex(fullInput, "unmark");
-        Task t = taskList.get(index);
-        t.markNotDone();
+        Task task = taskList.get(index);
+        task.markNotDone();
         save();
-        return t;
+        return task;
     }
 
     /**
@@ -129,10 +129,10 @@ public class Model {
      * @throws ZackException If parsing or saving fails.
      */
     public Deadline addDeadline(String fullInput) throws ZackException {
-        Deadline d = Parser.parseDeadline(fullInput, DATE_FMT);
-        taskList.add(d);
+        Deadline deadline = Parser.parseDeadline(fullInput, DATE_FMT);
+        taskList.add(deadline);
         save();
-        return d;
+        return deadline;
     }
 
     /**
@@ -143,10 +143,10 @@ public class Model {
      * @throws ZackException If parsing or saving fails.
      */
     public Event addEvent(String fullInput) throws ZackException {
-        Event e = Parser.parseEvent(fullInput, DATE_FMT);
-        taskList.add(e);
+        Event event = Parser.parseEvent(fullInput, DATE_FMT);
+        taskList.add(event);
         save();
-        return e;
+        return event;
     }
 
     /**
@@ -156,7 +156,7 @@ public class Model {
      * @return A list of matching tasks.
      * @throws ZackException If the keyword is empty.
      */
-    public ArrayList<Task> find(String fullInput) throws ZackException {
+    public TaskList find(String fullInput) throws ZackException {
         String keyword = fullInput.substring(5).trim();
 
         if (keyword.isEmpty()) {
@@ -169,16 +169,19 @@ public class Model {
             throw new ZackException("No matching tasks found.");
         }
 
-        return matches;
+        return new TaskList(matches);
     }
+
 
     /**
      * Sorts tasks by date and saves the updated list.
      *
+     * @return A list of tasks sorted by time.
      * @throws ZackException If saving fails.
      */
-    public void sort() throws ZackException {
+    public TaskList sort() throws ZackException {
         taskList.sortByDate();
         storage.save(taskList.getTasks());
+        return taskList;
     }
 }

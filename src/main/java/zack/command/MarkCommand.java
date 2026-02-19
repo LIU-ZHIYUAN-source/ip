@@ -17,9 +17,9 @@ public class MarkCommand implements Command {
 
     @Override
     public CommandResult execute(Model model) throws ZackException {
-        Task t = model.mark(fullInput);
+        Task task = model.mark(fullInput);
         String msg = "Nice! I've marked this task as done:\n"
-                + "  " + t.toDisplayString();
+                + "  " + task.toDisplayString();
         return new CommandResult(msg);
     }
 }

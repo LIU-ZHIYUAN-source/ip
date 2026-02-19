@@ -32,6 +32,15 @@ public abstract class Task {
     }
 
     /**
+     * Returns whether the task is completed.
+     *
+     * @return true if the task is done, otherwise false.
+     */
+    public boolean isDone() {
+        return this.isDone;
+    }
+
+    /**
      * Returns the description of the task.
      *
      * @return Task description.
@@ -46,16 +55,7 @@ public abstract class Task {
      * @return Status icon string.
      */
     public String getStatus() {
-        return this.isDone ? "[X]" : "[ ]";
-    }
-
-    /**
-     * Returns whether the task is completed.
-     *
-     * @return true if the task is done, otherwise false.
-     */
-    public boolean isDone() {
-        return this.isDone;
+        return this.isDone ? "[X]" : "[  ]";
     }
 
     public boolean hasDate() {

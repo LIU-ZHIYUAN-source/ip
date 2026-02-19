@@ -17,10 +17,10 @@ public class EventCommand implements Command {
 
     @Override
     public CommandResult execute(Model model) throws ZackException {
-        Event e = model.addEvent(fullInput);
+        Event event = model.addEvent(fullInput);
 
         String msg = "Got it. I've added this task:\n"
-                + "  " + e.toDisplayString() + "\n"
+                + "  " + event.toDisplayString() + "\n"
                 + "Now you have " + model.size() + " tasks in the list.";
         return new CommandResult(msg);
     }

@@ -17,10 +17,10 @@ public class DeleteCommand implements Command {
 
     @Override
     public CommandResult execute(Model model) throws ZackException {
-        Task removed = model.delete(fullInput);
+        Task removedTask = model.delete(fullInput);
 
         String msg = "Noted. I've removed this task:\n"
-                + "  " + removed.toDisplayString() + "\n"
+                + "  " + removedTask.toDisplayString() + "\n"
                 + "Now you have " + model.size() + " tasks in the list.";
         return new CommandResult(msg);
     }

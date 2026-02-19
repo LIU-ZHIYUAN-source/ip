@@ -1,6 +1,6 @@
 package zack.command;
 
-//I asked chatgpt how to improve my code, and it suggest me to make the command package,
+//I asked chatgpt how to improve my code, and it suggests me to make the command package,
 //here is the conversation link: https://chatgpt.com/share/69941c4b-41f8-800e-8f72-d9e1145b0f65
 //and I am also inspired by https://github.com/NUS-CS2103-AY2526-S2/ip/pull/367,
 //but all the code below are implemented by myself.
@@ -32,10 +32,16 @@ public class CommandResult {
         this.shouldExit = shouldExit;
     }
 
+    /**
+     * Returns the feedback message for the user.
+     */
     public String getFeedbackToUser() {
         return feedbackToUser;
     }
 
+    /**
+     * Returns whether the application should exit.
+     */
     public boolean shouldExit() {
         return shouldExit;
     }

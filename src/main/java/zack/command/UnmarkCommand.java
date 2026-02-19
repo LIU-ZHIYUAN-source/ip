@@ -17,9 +17,9 @@ public class UnmarkCommand implements Command {
 
     @Override
     public CommandResult execute(Model model) throws ZackException {
-        Task t = model.unmark(fullInput);
+        Task task = model.unmark(fullInput);
         String msg = "OK, I've marked this task as not done yet:\n"
-                + "  " + t.toDisplayString();
+                + "  " + task.toDisplayString();
         return new CommandResult(msg);
     }
 }

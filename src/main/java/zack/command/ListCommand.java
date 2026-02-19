@@ -19,10 +19,10 @@ public class ListCommand implements Command {
 
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
         for (int i = 0; i < taskList.size(); i++) {
-            Task t = taskList.get(i);
+            Task tasks = taskList.get(i);
             sb.append(i + 1)
                     .append(". ")
-                    .append(t.toDisplayString())
+                    .append(tasks.toDisplayString())
                     .append("\n");
         }
 

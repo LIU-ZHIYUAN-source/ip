@@ -17,10 +17,10 @@ public class DeadlineCommand implements Command {
 
     @Override
     public CommandResult execute(Model model) throws ZackException {
-        Deadline d = model.addDeadline(fullInput);
+        Deadline deadline = model.addDeadline(fullInput);
 
         String msg = "Got it. I've added this task:\n"
-                + "  " + d.toDisplayString() + "\n"
+                + "  " + deadline.toDisplayString() + "\n"
                 + "Now you have " + model.size() + " tasks in the list.";
         return new CommandResult(msg);
     }

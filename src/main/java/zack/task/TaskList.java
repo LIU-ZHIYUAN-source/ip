@@ -84,9 +84,9 @@ public class TaskList {
         ArrayList<Task> result = new ArrayList<>();
         String key = keyword.trim().toLowerCase();
 
-        for (Task t : tasks) {
-            if (t.getDescription().toLowerCase().contains(key)) {
-                result.add(t);
+        for (Task task : tasks) {
+            if (task.getDescription().toLowerCase().contains(key)) {
+                result.add(task);
             }
         }
         return result;
@@ -97,14 +97,14 @@ public class TaskList {
      * Dated tasks are ordered by their date in ascending order.
      */
     public void sortByDate() {
-        tasks.sort((a, b) -> {
-            if (a.hasDate() && b.hasDate()) {
-                return a.getSortDate().compareTo(b.getSortDate());
+        tasks.sort((aTask, bTask) -> {
+            if (aTask.hasDate() && bTask.hasDate()) {
+                return aTask.getSortDate().compareTo(bTask.getSortDate());
             }
-            if (a.hasDate()) {
+            if (aTask.hasDate()) {
                 return -1;
             }
-            if (b.hasDate()) {
+            if (bTask.hasDate()) {
                 return 1;
             }
             return 0;
