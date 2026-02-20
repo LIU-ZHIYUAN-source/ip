@@ -8,7 +8,7 @@ import java.util.Locale;
  * Represents a deadline task with a due date.
  */
 public class Deadline extends Task {
-    private LocalDate dueDate;
+    private final LocalDate dueDate;
 
     /**
      * Constructs a deadline task with the given description and due date.

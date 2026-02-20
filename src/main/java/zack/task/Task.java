@@ -1,7 +1,9 @@
 package zack.task;
 
 /**
- * Represents a task.
+ * Represents a task in the application.
+ * A task has a description and completion status, and may optionally be associated with a date.
+ * Subclasses provide specific task types and display formats.
  */
 public abstract class Task {
     protected String description;

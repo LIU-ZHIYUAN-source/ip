@@ -8,8 +8,8 @@ import java.util.Locale;
  * Represents an event task with a start date and an end date.
  */
 public class Event extends Task {
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
 
     /**
      * Constructs an event task with the given description and dates.

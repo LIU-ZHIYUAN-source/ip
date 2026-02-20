@@ -15,7 +15,7 @@ public class CommandResult {
     /**
      * Creates a CommandResult with feedback only.
      *
-     * @param feedbackToUser String message to show to user
+     * @param feedbackToUser String message to show to user.
      */
     public CommandResult(String feedbackToUser) {
         this(feedbackToUser, false);
@@ -24,8 +24,8 @@ public class CommandResult {
     /**
      * Creates a CommandResult with feedback and exit flag.
      *
-     * @param feedbackToUser String message to show to user
-     * @param shouldExit     whether the application should exit
+     * @param feedbackToUser String message to show to user.
+     * @param shouldExit     whether the application should exit.
      */
     public CommandResult(String feedbackToUser, boolean shouldExit) {
         this.feedbackToUser = feedbackToUser;

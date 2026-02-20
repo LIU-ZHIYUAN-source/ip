@@ -2,30 +2,32 @@ package zack.command;
 
 import zack.exception.ZackException;
 import zack.model.Model;
-import zack.task.Task;
-import zack.task.TaskList;
+import zack.ui.Ui;
 
 /**
- * Lists all tasks currently stored in the task list.
+ * Represents a command that lists all tasks currently stored in the task list.
  */
 public class ListCommand implements Command {
+    private final Ui ui;
+
+    /**
+     * Creates a ListCommand with the given UI.
+     *
+     * @param ui The UI used to format output messages.
+     */
+    public ListCommand(Ui ui) {
+        this.ui = ui;
+    }
+
+    /**
+     * Executes this command using the given model.
+     *
+     * @param model The model to operate on.
+     * @return The result of executing this command.
+     * @throws ZackException If an error occurs during execution.
+     */
     @Override
     public CommandResult execute(Model model) throws ZackException {
-        TaskList taskList = model.getTaskList();
-
-        if (taskList.size() == 0) {
-            return new CommandResult("Your task list is empty.");
-        }
-
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
-        for (int i = 0; i < taskList.size(); i++) {
-            Task tasks = taskList.get(i);
-            sb.append(i + 1)
-                    .append(". ")
-                    .append(tasks.toDisplayString())
-                    .append("\n");
-        }
-
-        return new CommandResult(sb.toString().trim());
+        return new CommandResult(ui.formatListResult(model.getTaskList()));
     }
 }

@@ -45,8 +45,8 @@ public class Storage {
         try {
             Files.createDirectories(dataDir);
             try (BufferedWriter writer = Files.newBufferedWriter(dataFile)) {
-                for (Task t : tasks) {
-                    writer.write(encodeTask(t));
+                for (Task task : tasks) {
+                    writer.write(encodeTask(task));
                     writer.newLine();
                 }
             }
@@ -74,9 +74,9 @@ public class Storage {
                 if (line.trim().isEmpty()) {
                     continue;
                 }
-                Task t = decodeTask(line);
-                if (t != null) {
-                    tasks.add(t);
+                Task task = decodeTask(line);
+                if (task != null) {
+                    tasks.add(task);
                 }
             }
         } catch (IOException e) {
@@ -89,21 +89,21 @@ public class Storage {
     /**
      * Encodes a task into a single-line string for saving.
      *
-     * @param t Task to be encoded.
+     * @param task Task to be encoded.
      * @return Encoded string representation of the task.
      */
-    private String encodeTask(Task t) {
-        String done = t.isDone() ? "1" : "0";
+    private String encodeTask(Task task) {
+        String done = task.isDone() ? "1" : "0";
 
-        if (t instanceof Todo) {
-            return "T | " + done + " | " + t.getDescription();
+        if (task instanceof Todo) {
+            return "T | " + done + " | " + task.getDescription();
         }
-        if (t instanceof Deadline) {
-            Deadline d = (Deadline) t;
-            return "D | " + done + " | " + d.getDescription() + " | " + d.getDueDate().format(dateFmt);
+        if (task instanceof Deadline) {
+            Deadline deadline = (Deadline) task;
+            return "D | " + done + " | " + deadline.getDescription() + " | " + deadline.getDueDate().format(dateFmt);
         }
-        assert t instanceof Event : "Unexpected Task subtype: " + t.getClass();
-        Event e = (Event) t;
+        assert task instanceof Event : "Unexpected Task subtype: " + task.getClass();
+        Event e = (Event) task;
         return "E | " + done + " | " + e.getDescription() + " | " + e.getStartDate().format(dateFmt)
                 + " | " + e.getEndDate().format(dateFmt);
     }
@@ -126,28 +126,28 @@ public class Storage {
         boolean done = "1".equals(parts[1]);
         String desc = parts[2];
 
-        Task t;
+        Task task;
 
         switch (type) {
         case "T": {
-            t = new Todo(desc);
+            task = new Todo(desc);
             break;
         }
         case "D": {
             if (parts.length < 4) {
                 return null;
             }
-            LocalDate by = LocalDate.parse(parts[3], dateFmt);
-            t = new Deadline(desc, by);
+            LocalDate dueDate = LocalDate.parse(parts[3], dateFmt);
+            task = new Deadline(desc, dueDate);
             break;
         }
         case "E": {
             if (parts.length < 5) {
                 return null;
             }
-            LocalDate from = LocalDate.parse(parts[3], dateFmt);
-            LocalDate to = LocalDate.parse(parts[4], dateFmt);
-            t = new Event(desc, from, to);
+            LocalDate startDate = LocalDate.parse(parts[3], dateFmt);
+            LocalDate endDate = LocalDate.parse(parts[4], dateFmt);
+            task = new Event(desc, startDate, endDate);
             break;
         }
         default:
@@ -155,9 +155,9 @@ public class Storage {
         }
 
         if (done) {
-            t.markDone();
+            task.markDone();
         }
-        return t;
+        return task;
     }
 }
 

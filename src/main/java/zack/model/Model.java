@@ -15,7 +15,7 @@ import zack.task.Todo;
 
 /**
  * Represents the core application logic of Zack.
- * Handles task operations and coordinates persistence.
+ * Manages task operations on the task list and persists changes to storage.
  */
 public class Model {
 
@@ -154,7 +154,7 @@ public class Model {
      *
      * @param fullInput The full user input.
      * @return A list of matching tasks.
-     * @throws ZackException If the keyword is empty.
+     * @throws ZackException If the keyword is empty or no matching tasks are found.
      */
     public TaskList find(String fullInput) throws ZackException {
         String keyword = fullInput.substring(5).trim();
@@ -181,7 +181,7 @@ public class Model {
      */
     public TaskList sort() throws ZackException {
         taskList.sortByDate();
-        storage.save(taskList.getTasks());
+        save();
         return taskList;
     }
 }

@@ -3,30 +3,37 @@ package zack.command;
 import zack.exception.ZackException;
 import zack.model.Model;
 import zack.task.TaskList;
+import zack.ui.Ui;
 
 /**
- * Finds tasks whose descriptions contain a keyword.
+ * Represents a command that finds tasks whose descriptions contain a keyword.
  */
 public class FindCommand implements Command {
 
     private final String fullInput;
+    private final Ui ui;
 
-    public FindCommand(String fullInput) {
+    /**
+     * Creates a FindCommand with the given user input and UI.
+     *
+     * @param fullInput The full user input.
+     * @param ui        The UI used to format output messages.
+     */
+    public FindCommand(String fullInput, Ui ui) {
         this.fullInput = fullInput;
+        this.ui = ui;
     }
 
+    /**
+     * Executes this command using the given model.
+     *
+     * @param model The model to operate on.
+     * @return The result of executing this command.
+     * @throws ZackException If an error occurs during execution.
+     */
     @Override
     public CommandResult execute(Model model) throws ZackException {
         TaskList matchedTasks = model.find(fullInput);
-
-        StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
-        for (int i = 0; i < matchedTasks.size(); i++) {
-            sb.append(i + 1)
-                    .append(". ")
-                    .append(matchedTasks.get(i).toDisplayString())
-                    .append("\n");
-        }
-
-        return new CommandResult(sb.toString());
+        return new CommandResult(ui.formatFindResult(matchedTasks));
     }
 }

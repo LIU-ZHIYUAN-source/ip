@@ -25,6 +25,7 @@ public class Zack {
     private final Ui ui;
     private final Storage storage;
     private final Model model;
+    private final CommandParser parser;
 
     /**
      * Constructs a new instance.
@@ -43,6 +44,7 @@ public class Zack {
 
         TaskList tasks = new TaskList(loadedTasks);
         this.model = new Model(tasks, storage);
+        this.parser = new CommandParser(ui);
     }
 
     /**
@@ -76,13 +78,14 @@ public class Zack {
 
     /**
      * Executes the given user input and returns the result.
+     * Any parsing or execution errors are converted into user feedback.
      *
      * @param input The raw user input.
      * @return The result of executing the command.
      */
     public CommandResult executeCommand(String input) {
         try {
-            Command command = CommandParser.parse(input);
+            Command command = parser.parse(input);
             return command.execute(model);
         } catch (ZackException e) {
             return new CommandResult(e.getMessage());
