@@ -65,9 +65,7 @@ public class Storage {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {
-            Files.createDirectories(dataDir);
             if (!Files.exists(dataFile)) {
-                Files.createFile(dataFile);
                 return tasks;
             }
 
