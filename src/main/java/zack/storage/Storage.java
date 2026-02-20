@@ -33,6 +33,12 @@ public class Storage {
     public Storage(Path dataDir, Path dataFile) {
         this.dataDir = dataDir;
         this.dataFile = dataFile;
+
+        try {
+            Files.createDirectories(dataDir);
+        } catch (IOException e) {
+            //
+        }
     }
 
     /**
