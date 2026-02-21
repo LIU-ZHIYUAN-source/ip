@@ -124,6 +124,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the keyword from a find command.
+     *
+     * @param input Full user input string.
+     * @return The extracted keyword to search for.
+     * @throws ZackException If the keyword is empty.
+     */
     public static String parseFindKeyword(String input) throws ZackException {
         String keyword = input.substring(4).trim();
 
