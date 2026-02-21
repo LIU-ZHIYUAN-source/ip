@@ -172,7 +172,7 @@ public class Model {
     /**
      * Sorts tasks by date and saves the updated list.
      *
-     * @return A list of tasks sorted by time.
+     * @return A list of tasks sorted by end date.
      * @throws ZackException If saving fails.
      */
     public TaskList sort() throws ZackException {
