@@ -157,7 +157,7 @@ public class Model {
      * @throws ZackException If the keyword is empty or no matching tasks are found.
      */
     public TaskList find(String fullInput) throws ZackException {
-        String keyword = fullInput.substring(4).trim();
+        String keyword = fullInput.substring(5).trim();
 
         if (keyword.isEmpty()) {
             throw new ZackException("OOPS!!! The keyword to find cannot be empty.");
