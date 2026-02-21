@@ -47,10 +47,7 @@ public class Parser {
      * @throws ZackException If the input is invalid.
      */
     public static Todo parseTodo(String input) throws ZackException {
-        if (input.equals("todo")) {
-            throw new ZackException("OOPS!!! The description of a todo cannot be empty.");
-        }
-        String desc = input.substring(5).trim();
+        String desc = input.substring(4).trim();
         if (desc.isEmpty()) {
             throw new ZackException("OOPS!!! The description of a todo cannot be empty.");
         }
@@ -66,7 +63,7 @@ public class Parser {
      * @throws ZackException If the input is invalid.
      */
     public static Deadline parseDeadline(String input, DateTimeFormatter dateFmt) throws ZackException {
-        String rest = input.substring(9);
+        String rest = input.substring(8);
         String[] parts = rest.split("/by", 2);
         if (parts.length < 2) {
             throw new ZackException("OOPS!!! Usage: deadline <description> /by yyyy-mm-dd");
@@ -96,7 +93,7 @@ public class Parser {
      * @throws ZackException If the input is invalid.
      */
     public static Event parseEvent(String input, DateTimeFormatter dateFmt) throws ZackException {
-        String rest = input.substring(6);
+        String rest = input.substring(5);
         String[] firstSplit = rest.split("/from", 2);
         if (firstSplit.length < 2) {
             throw new ZackException("OOPS!!! Usage: event <description> /from yyyy-mm-dd /to yyyy-mm-dd");
