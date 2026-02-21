@@ -9,13 +9,13 @@ It allows you to create, manage, and organize tasks such as todos, deadlines, an
 
 Follow the steps below to get Zack running in under a minute.
 
-### 1. Ensure Java 17 is installed
+ 1. Ensure Java 17 is installed
 
-### 2. Download the latest `zack.jar` from the Releases page.
+ 2. Download the latest `zack.jar` from the Releases page.
 
-### 3.Open a terminal in the jar file location, and run: `java -jar zack.jar`
+ 3.Open a terminal in the jar file location, and run: `java -jar zack.jar`
 
-### 4.Type commands into the input box.
+ 4.Type commands into the input box.
 
 ## Adding Tasks
 
