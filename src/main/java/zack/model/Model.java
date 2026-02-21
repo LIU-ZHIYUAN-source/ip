@@ -154,14 +154,10 @@ public class Model {
      *
      * @param fullInput The full user input.
      * @return A list of matching tasks.
-     * @throws ZackException If the keyword is empty or no matching tasks are found.
+     * @throws ZackException If no matching tasks are found.
      */
     public TaskList find(String fullInput) throws ZackException {
-        String keyword = fullInput.substring(5).trim();
-
-        if (keyword.isEmpty()) {
-            throw new ZackException("OOPS!!! The keyword to find cannot be empty.");
-        }
+        String keyword = Parser.parseFindKeyword(fullInput);
 
         ArrayList<Task> matches = taskList.find(keyword);
 

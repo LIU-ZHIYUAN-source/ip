@@ -123,4 +123,14 @@ public class Parser {
             throw new ZackException("OOPS!!! Date must be yyyy-mm-dd");
         }
     }
+
+    public static String parseFindKeyword(String input) throws ZackException {
+        String keyword = input.substring(4).trim();
+
+        if (keyword.isEmpty()) {
+            throw new ZackException("OOPS!!! The keyword to find cannot be empty.");
+        }
+
+        return keyword;
+    }
 }
